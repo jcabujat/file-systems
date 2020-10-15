@@ -12,14 +12,19 @@ public class Main {
     public static void main(String[] args) {
         Path path = FileSystems.getDefault().getPath("WorkingDirectoryFile.txt");
         printFile(path);
-        Path subPath = FileSystems.getDefault().getPath("file","SubdirectoryFile.txt");
+//        Path subPath = FileSystems.getDefault().getPath("file","SubdirectoryFile.txt");
+        Path subPath = Paths.get(".", "file", "SubdirectoryFile.txt");
+        // Paths.get(".") returns the absolute path same as FileSystems.getDefault()
         printFile(subPath);
         Path outPath = Paths.get("C:\\Users\\jonat\\IdeaProjects\\OutThere.txt.txt");
         printFile(outPath);
+        Path path2 = FileSystems.getDefault().getPath(".", "file", "..", "file", "SubdirectoryFile.txt");
+        System.out.println(path2.normalize().toAbsolutePath()); // normalize() method to remove the dots in the path
+        printFile(path2);
     }
 
     private static void printFile(Path path) {
-        try (BufferedReader reader = Files.newBufferedReader(path)){
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
